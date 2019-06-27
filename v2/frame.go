@@ -121,9 +121,12 @@ type IdFrame struct {
 }
 
 func NewIdFrame(ft FrameType, ownerId string, id []byte) *IdFrame {
+	// TODO test it
+	id = append([]byte{0}, id...) // or it will be wrong number of bytes with many consequences
+
 	head := FrameHead{
 		FrameType: ft,
-		size:      uint32(1 + len(ownerId) + len(id)),
+		size:      uint32(len(ownerId) + len(id)),
 	}
 
 	return &IdFrame{
